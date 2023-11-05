@@ -7,7 +7,7 @@ class Customers(MethodView):
     init_every_request = False
 
     def get(self, customer_id):
-        pass
+        return "Hello"
 
     def post(self, customer_id):
         pass
