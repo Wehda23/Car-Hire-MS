@@ -3,7 +3,8 @@ from abc import ABC, abstractmethod
 
 # Vehicle Class represents an interface to enforce rules upon certain vehicle categories to better organize code.
 class Vehicle(ABC):
-    passengers: int
+    __passengers: int
+    __booking_duration_in_days: int
 
     # method that checks if passengers does not cross limit, using decorated enforces the method to be implemented to subclasses.
     @abstractmethod
@@ -17,20 +18,54 @@ class Vehicle(ABC):
         """
         pass
 
+    @abstractmethod
+    def get_passengers(self):
+        pass
+    
+    @abstractmethod
+    def get_booking_duration(self,limit: str = 'day'):
+        pass
+        
+
 class SmallCars(Vehicle):
-    passengers: int = 4
+    __passengers: int = 4
+    __booking_duration_in_days: int = 7
 
     def passenger_limits(self, people: int) -> bool:
-        return people <= self.passengers
+        return people <= self.__passengers
+    
+    def get_passengers(self):
+        return self.__passengers
+    
+    def get_booking_duration(self,limit: str = 'day'):
+        if limit == 'day':
+            return self.__booking_duration_in_days
+        
 
 class FamilyCars(Vehicle):
-    passengers: int = 7
+    __passengers: int = 7
+    __booking_duration_in_days: int = 7
 
     def passenger_limits(self, people: int) -> bool:
-        return people <= self.passengers
+        return people <= self.__passengers
 
+    def get_passengers(self):
+        return self.__passengers
+    
+    def get_booking_duration(self,limit: str = 'day'):
+        if limit == 'day':
+            return self.__booking_duration_in_days
+        
 class Vans(Vehicle):
-    passengers: int = 2
+    __passengers: int = 2
+    __booking_duration_in_days: int = 7
 
     def passenger_limits(self, people: int) -> bool:
-        return people <= self.passengers
+        return people <= self.__passengers
+    
+    def get_passengers(self):
+        return self.__passengers
+    
+    def get_booking_duration(self,limit: str = 'day'):
+        if limit == 'day':
+            return self.__booking_duration_in_days
