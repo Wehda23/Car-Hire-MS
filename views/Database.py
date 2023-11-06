@@ -12,7 +12,7 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 # Creates database in case does not exist Or Raise Error Database with this name does not exist
-class MySQLDatabase(mysql.connector):
+class MySQLDatabase:
     def __init__(
         self,
         dbname: str = DATBASE_NAME,
@@ -28,14 +28,22 @@ class MySQLDatabase(mysql.connector):
         self.password: str = password
         self.mydb = None
 
-    def connect(self):
-        self.mydb = mysql.connector.connect(
-                host = self.host,
-                password = self.password,
-                port = self.port,
-                user = self.user,
-                database = self.dbname,
+    def connect(self) -> None:
+        """
+        Void Function used to connect to database
+        """
+        try:
+            self.mydb = mysql.connector.connect(
+                    host = self.host,
+                    password = self.password,
+                    port = self.port,
+                    user = self.user,    
                 )
+            
+            self.mycursor = self.mydb.cursor()
+
+        except mysql.connector.Error as e:
+            print(f"Error connecting to the database: {e}")
         
     def get_mysqldb(self):
         if self.mydb:
@@ -43,6 +51,16 @@ class MySQLDatabase(mysql.connector):
         raise ValueError("self.mydb is undefined!.")
 
     # method to create database
+    def create_database(self) -> None:
+        """
+        Method used to check if the database exists or not 
+        """
+        try:
+            pass
+        except mysql.connector.Error as e:
+            print(f"Error creating/checking database: {e}")
+        
+
 
     # method to close connection
 
@@ -53,4 +71,5 @@ class MySQLDatabase(mysql.connector):
     # method to create tables
 # Write a class to check the database
 
+# MySQLQuery Class:
 
