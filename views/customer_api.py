@@ -7,18 +7,24 @@ class Customers(MethodView):
 
     def get(self, customer_id):
         """
-        API get end point is used to retrieve customer's details
+        Retrieve customer's details by customer_id.
         """
         return jsonify({"test": "Test"})
 
     def post(self, customer_id):
         """
-        API post end point is used to update customer's details
+        Add a new customer.
+        """
+        pass
+
+    def put(self, customer_id):
+        """
+        Update customer's details by customer_id.
         """
         pass
 
     def delete(self, customer_id):
         """
-        API post end point is used to delete a customer.
+        Delete a customer by customer_id.
         """
         pass
