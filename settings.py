@@ -12,7 +12,7 @@ import os
 HOST: str = "localhost"
 MYSQL_USER: str = os.getenv("MYSQL_USER")
 MYSQL_PASSWORD: str = os.getenv("MYSQL_PASSWORD")
-DATBASE_NAME: str = "CarHire"  # os.getenv("MYSQL_DB_NAME")
+DATABASE_NAME: str = "CarHire"  # os.getenv("MYSQL_DB_NAME")
 
 # Raise error incase those fields are empty
 if not MYSQL_USER:

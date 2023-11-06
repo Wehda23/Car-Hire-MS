@@ -1,18 +1,25 @@
 from flask import Flask
 from views.customer_api import Customers
-from views.Database import mycursor
-
+from views.Database import MySQLConnection, MySQLManager
+from settings import DATABASE_NAME
 app = Flask(__name__)
 
 """
 <============= Database =============>
 """
-# In this part of code should run checks for database
-# Check if database does not exists
-# Create database with the database name
+# Initiate MySQLConnection, It connects to MySQL but not the Database!
+mysql_connection: MySQLConnection = MySQLConnection()
 
-# Check if table names does not exists
-# Create none existing tables.
+# Connect to mysql
+mysql_connection.connect()
+
+# Initiate MySQLManager
+mysql_manager: MySQLManager = MySQLManager(mysql_connection)
+# Create database
+mysql_manager.create_database(DATABASE_NAME)
+
+
+
 
 """
 <============= End of Database =============>

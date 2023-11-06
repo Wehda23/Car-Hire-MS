@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import mysql.connector
-from settings import MYSQL_USER, MYSQL_PASSWORD, DATBASE_NAME
+from settings import MYSQL_USER, MYSQL_PASSWORD, DATABASE_NAME
 
 
 # Interface showing database connection
@@ -75,7 +75,7 @@ class MySQLConnection(SQLConnection):
 class MySQLDatabaseConnection(SQLConnection):
     def __init__(
         self,
-        dbname: str = DATBASE_NAME,
+        dbname: str = DATABASE_NAME,
         host: str = "localhost",
         port: int = 3306,
         user: str = MYSQL_USER,
@@ -175,10 +175,41 @@ class MySQLManager:
 
 
 # TableCreation Class:
-# Write class that checks if a table exists, If does not exist create table
-# method to check_tables_exists
+class MySQLTablesManager:
+    def __init__(self, mysql_database_connection: MySQLDatabaseConnection):
+        self.connection = mysql_database_connection
 
-# method to create tables
-# Write a class to check the database
+    def check_table_exists(self, table_name: str) -> bool:
+        self.connection.mycursor.execute(f"SHOW TABLES LIKE '{table_name}'")
+        result = self.connection.mycursor.fetchone()
+        if result:
+            print(f"Table '{table_name}' exists.")
+            return True
+        else:
+            print(f"Table '{table_name}' does not exist.")
+            return False
 
-# MySQLQuery Class:
+    def create_table(self, table_name: str, columns: list[str]) -> None:
+        # Make sure database is connected
+        if not (self.connection.mydb):
+            self.connection.connect()
+
+        if not self.check_table_exists(table_name):
+            create_table_query = f"CREATE TABLE {table_name} ({', '.join(columns)})"
+            self.connection.mycursor.execute(create_table_query)
+            self.connection.mydb.commit()
+            print(f"Table '{table_name}' created.")
+        else:
+            # Code that should be applied here is to see the difference between new table design and old one
+                # if it is renaming a column
+                    # add to table query variable string
+                # if it is deleteing a column
+                    # add to table query variabl string
+                # if it is adding a new column
+                    # add to table query variable string
+                
+                # execute and commit the query.
+            pass
+            
+        # Close database here
+        self.connection.close()
