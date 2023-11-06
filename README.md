@@ -34,7 +34,7 @@ CREATE TABLE Bookings (
   customer_id INT NOT NULL,
   vehicle_id INT NOT NULL,
   hire_date DATE NOT NULL,
-  end_date DATE NOT NULL,
+  return_date DATE NOT NULL,
   FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
   FOREIGN KEY (vehicle_id) REFERENCES Vehicles(vehicle_id)
 );
