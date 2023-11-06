@@ -154,7 +154,6 @@ class MySQLManager:
             # Values
             values: tuple = (database_name,) # self.dbname
             # Get database
-            print(type(self.connection))
             self.connection.mycursor.execute(query,values)
             result = self.connection.mycursor.fetchall()
             
@@ -174,16 +173,9 @@ class MySQLManager:
 
 # TableCreation Class:
 class MySQLTablesManager:
-    __tables :list = []
 
     def __init__(self, mysql_database_connection: MySQLDatabaseConnection):
         self.connection: MySQLDatabaseConnection = mysql_database_connection
-
-    def add(self,table) -> None:
-        """
-        Appends table to the self.__tables
-        """
-        self.__tables.append(table)
 
     def check_table_exists(self, table_name: str) -> bool:
         self.connection.mycursor.execute(f"SHOW TABLES LIKE '{table_name}'")

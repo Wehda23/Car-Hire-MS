@@ -1,5 +1,5 @@
 from flask import Flask
-from views.customer_api import Customers
+from views.customer_api import Customers,RegisterCustomers
 from views.Database import MySQLConnection, MySQLManager, MySQLDatabaseConnection,MySQLTablesManager
 from settings import DATABASE_NAME
 from views.models import CustomersTable, BookingsTable, VehiclesTable
@@ -41,6 +41,10 @@ table_manager.create_table(BookingsTable.name, BookingsTable.fields)
 """
 <============= API ROUTES =============>
 """
+
+app.add_url_rule(
+    f"/customers/register", view_func=RegisterCustomers.as_view("register-customer-api")
+)
 app.add_url_rule(
     f"/customers/<int:customer_id>", view_func=Customers.as_view("customer-api")
 )
