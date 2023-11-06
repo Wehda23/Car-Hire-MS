@@ -1,6 +1,11 @@
 from flask import Flask
-from views.customer_api import Customers,RegisterCustomers
-from views.Database import MySQLConnection, MySQLManager, MySQLDatabaseConnection,MySQLTablesManager
+from views.customer_api import Customers, RegisterCustomers
+from views.Database import (
+    MySQLConnection,
+    MySQLManager,
+    MySQLDatabaseConnection,
+    MySQLTablesManager,
+)
 from settings import DATABASE_NAME
 from views.models import CustomersTable, BookingsTable, VehiclesTable
 

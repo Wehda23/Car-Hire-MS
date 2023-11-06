@@ -5,7 +5,6 @@ from settings import MYSQL_USER, MYSQL_PASSWORD, DATABASE_NAME
 
 # Interface showing database connection
 class SQLConnection:
-
     def get_mysqldb(self):
         pass
 
@@ -18,7 +17,6 @@ class SQLConnection:
 
 # Connects to MySQL without Database
 class MySQLConnection(SQLConnection):
-
     def __init__(
         self,
         host: str = "localhost",
@@ -37,7 +35,7 @@ class MySQLConnection(SQLConnection):
         if self.mydb:
             return self.mydb
         raise ValueError("self.mydb is undefined!.")
-    
+
     def connect(self) -> None:
         """
         Void Function used to connect to mysql
@@ -58,7 +56,7 @@ class MySQLConnection(SQLConnection):
 
         except mysql.connector.Error as e:
             print(f"Error connecting to the mysql: {e}")
-    
+
     def close(self) -> None:
         # Check if the database is connected
         if self.mydb.is_connected():
@@ -70,6 +68,7 @@ class MySQLConnection(SQLConnection):
             self.mydb = None
             # Reset self.mydb to None
             self.mycursor = None
+
 
 # Connects to MySQL Database directly
 class MySQLDatabaseConnection(SQLConnection):
@@ -89,7 +88,6 @@ class MySQLDatabaseConnection(SQLConnection):
         self.mydb = None
         self.mycursor = None
 
-
     def connect(self, database_name: str = None) -> None:
         """
         Void Function used to connect to database
@@ -97,7 +95,6 @@ class MySQLDatabaseConnection(SQLConnection):
         :database_name: Optional Parameter to provide a new database name incase needed (default: None)
         """
         try:
-
             # If a new database name was entered it will overwrite the self.dbname variable other wise it is an optional parameter
             if database_name:
                 self.dbname = database_name
@@ -143,7 +140,7 @@ class MySQLDatabaseConnection(SQLConnection):
 class MySQLManager:
     def __init__(self, mysql_connection: MySQLConnection):
         self.connection = mysql_connection
-    
+
     def create_database(self, database_name: str) -> None:
         """
         Method used to check if the database exists or not, Note function closes the connection after creating the database.
@@ -152,11 +149,11 @@ class MySQLManager:
             # Our query to get the database
             query: str = "SHOW DATABASES LIKE %s"
             # Values
-            values: tuple = (database_name,) # self.dbname
+            values: tuple = (database_name,)  # self.dbname
             # Get database
-            self.connection.mycursor.execute(query,values)
+            self.connection.mycursor.execute(query, values)
             result = self.connection.mycursor.fetchall()
-            
+
             # Check if database exists
             if result:
                 print(f"Database {database_name} Already Exists !")
@@ -164,7 +161,7 @@ class MySQLManager:
                 # Create the database
                 self.connection.mycursor.execute(f"CREATE DATABASE {database_name}")
                 print(f"Database '{database_name}' created.")
-            
+
             self.connection.close()
 
         except mysql.connector.Error as e:
@@ -173,7 +170,6 @@ class MySQLManager:
 
 # TableCreation Class:
 class MySQLTablesManager:
-
     def __init__(self, mysql_database_connection: MySQLDatabaseConnection):
         self.connection: MySQLDatabaseConnection = mysql_database_connection
 
@@ -199,15 +195,15 @@ class MySQLTablesManager:
             print(f"Table '{table_name}' created.")
         else:
             # Code that should be applied here is to see the difference between new table design and old one
-                # if it is renaming a column
-                    # add to table query variable string
-                # if it is deleteing a column
-                    # add to table query variabl string
-                # if it is adding a new column
-                    # add to table query variable string
-                
-                # execute and commit the query.
+            # if it is renaming a column
+            # add to table query variable string
+            # if it is deleteing a column
+            # add to table query variabl string
+            # if it is adding a new column
+            # add to table query variable string
+
+            # execute and commit the query.
             pass
-            
+
         # Close database here
         self.connection.close()
