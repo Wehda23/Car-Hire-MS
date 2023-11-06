@@ -12,8 +12,7 @@ class RegisterCustomers(MethodView):
         Add a new customer.
         """
         # Grab Data
-        data = request.get_json()  # Get raw data as a string
-        print(data)
+        data: dict = request.get_json() # Get data as python dict
 
         # Make sure a user with the same email does not exist
         mysql: MySQLDatabaseConnection = MySQLDatabaseConnection()
@@ -51,7 +50,28 @@ class Customers(MethodView):
         """
         Retrieve customer's details by customer_id.
         """
-        return jsonify({"test": "Test"})
+        # Make sure a user with the same email does not exist
+        mysql: MySQLDatabaseConnection = MySQLDatabaseConnection()
+        # Connect to database
+        mysql.connect()
+
+        # Create the Query and execute
+        query: str = "SELECT * FROM customers WHERE customer_id = %s"
+        mysql.mycursor.execute(query,(customer_id,))
+
+        # Get the result
+        result = mysql.mycursor.fetchall()
+
+        # Check if user exists
+        if result:
+            user: dict = {
+                "name": result[0][1],
+                "email": result[0][2],
+            }
+            return jsonify(user)
+        
+        mysql.close()
+        return jsonify("User Does not exist!")
     
     def put(self, customer_id):
         """
