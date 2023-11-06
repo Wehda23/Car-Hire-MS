@@ -4,7 +4,7 @@
 
 This repository contains SQL statements to set up a simple car hire database.
 
-## Database Schema Diagram
+## Database Entity Relationship Diagram
 
 Here's an entity-relationship diagram (ERD) illustrating the structure of the car hire database:
 
