@@ -4,6 +4,12 @@
 
 This repository contains SQL statements to set up a simple car hire database.
 
+## Database Schema Diagram
+
+Here's an entity-relationship diagram (ERD) illustrating the structure of the car hire database:
+
+![ERD](./erd.png)
+
 ## Schema
 
 The SQL script sets up three tables: `Customers`, `Vehicles`, and `Bookings`.
@@ -14,7 +20,8 @@ The SQL script sets up three tables: `Customers`, `Vehicles`, and `Bookings`.
 CREATE TABLE Customers (
   customer_id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL
+  email VARCHAR(255) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Vehicles (

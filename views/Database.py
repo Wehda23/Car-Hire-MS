@@ -177,7 +177,7 @@ class MySQLManager:
 # TableCreation Class:
 class MySQLTablesManager:
     def __init__(self, mysql_database_connection: MySQLDatabaseConnection):
-        self.connection = mysql_database_connection
+        self.connection: MySQLDatabaseConnection = mysql_database_connection
 
     def check_table_exists(self, table_name: str) -> bool:
         self.connection.mycursor.execute(f"SHOW TABLES LIKE '{table_name}'")
