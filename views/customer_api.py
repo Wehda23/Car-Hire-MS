@@ -80,10 +80,55 @@ class Customers(MethodView):
         """
         Update customer's details by customer_id.
         """
-        pass
+        data: dict = request.get_json()
+
+        # check keys in data
+        if "name" in data and 'email' in data:
+            name: str = data['name']
+            email: str = data['email']
+
+            # Make sure a user with the same email does not exist
+            mysql: MySQLDatabaseConnection = MySQLDatabaseConnection()
+            # Connect to database
+            mysql.connect()
+
+            query: str = "SELECT * FROM customers WHERE customer_id = %s"
+            mysql.mycursor.execute(query, (customer_id,))
+            result = mysql.mycursor.fetchall()
+
+            if result:
+                # Update the user details
+                update_query = "UPDATE customers SET name = %s, email = %s WHERE customer_id = %s"
+                values = (name, email, customer_id)
+                mysql.mycursor.execute(update_query, values)
+                mysql.mydb.commit()
+                mysql.close()
+
+                return make_response(jsonify("User details updated!"), 200)
+            
+            return make_response(jsonify("User does not exist!"), 404)
+
+        return make_response(jsonify("Invalid request data"), 400)
 
     def delete(self, customer_id):
         """
         Delete a customer by customer_id.
         """
-        pass
+        mysql: MySQLDatabaseConnection = MySQLDatabaseConnection()
+        # Connect to database
+        mysql.connect()
+
+        # Check if the user exists
+        query = "SELECT * FROM customers WHERE customer_id = %s"
+        mysql.mycursor.execute(query, (customer_id,))
+        result = mysql.mycursor.fetchall()
+
+        if result:
+            # Delete the user
+            delete_query = "DELETE FROM customers WHERE customer_id = %s"
+            mysql.mycursor.execute(delete_query, (customer_id,))
+            mysql.mydb.commit()
+            mysql.close()
+            return make_response(jsonify("User deleted!"), 200)  
+
+        return make_response(jsonify("User does not exist!"), 404) 
