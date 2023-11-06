@@ -2,8 +2,6 @@ from flask.views import MethodView
 from flask import jsonify
 
 
-
-
 class Customers(MethodView):
     init_every_request = False
 

@@ -9,11 +9,11 @@ app = Flask(__name__)
 """
 # In this part of code should run checks for database
 # Check if database does not exists
-        # Create database with the database name
+# Create database with the database name
 
 # Check if table names does not exists
-        # Create none existing tables.
-        
+# Create none existing tables.
+
 """
 <============= End of Database =============>
 """
