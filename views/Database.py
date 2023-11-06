@@ -97,8 +97,6 @@ class MySQLDatabaseConnection(SQLConnection):
         :database_name: Optional Parameter to provide a new database name incase needed (default: None)
         """
         try:
-            if not (isinstance(database_name, str)):
-                raise TypeError("parameter database_name should be of type <str>")
 
             # If a new database name was entered it will overwrite the self.dbname variable other wise it is an optional parameter
             if database_name:
@@ -176,8 +174,16 @@ class MySQLManager:
 
 # TableCreation Class:
 class MySQLTablesManager:
+    __tables :list = []
+
     def __init__(self, mysql_database_connection: MySQLDatabaseConnection):
         self.connection: MySQLDatabaseConnection = mysql_database_connection
+
+    def add(self,table) -> None:
+        """
+        Appends table to the self.__tables
+        """
+        self.__tables.append(table)
 
     def check_table_exists(self, table_name: str) -> bool:
         self.connection.mycursor.execute(f"SHOW TABLES LIKE '{table_name}'")
