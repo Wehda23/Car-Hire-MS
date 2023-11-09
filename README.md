@@ -1,5 +1,7 @@
 # Car Hire Management System by Waheed Khaled.
 
+Command to run application `flask --app main run --debugger`
+
 # Car Hire Database Schema
 
 This repository contains SQL statements to set up a simple car hire database.
