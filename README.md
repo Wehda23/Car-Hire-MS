@@ -1,6 +1,10 @@
 # Car Hire Management System by Waheed Khaled.
 
-Command to run application `flask --app main run --debugger`
+Command to run application
+
+```bash
+flask --app main run --debugger
+```
 
 # Car Hire Database Schema
 
